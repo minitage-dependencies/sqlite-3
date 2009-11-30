@@ -1,0 +1,37 @@
+diff -ur sqlite-3.5.9/Makefile.in sqlite-3.5.9.new/Makefile.in
+--- sqlite-3.5.9/Makefile.in	2008-05-12 19:10:26.000000000 +0200
++++ sqlite-3.5.9.new/Makefile.in	2009-11-24 19:43:01.906250000 +0100
+@@ -413,13 +413,13 @@
+ 
+ libsqlite3.la:	$(LIBOBJ)
+ 	$(LTLINK) -o $@ $(LIBOBJ) $(TLIBS) \
+-		${ALLOWRELEASE} -rpath "$(libdir)" -version-info "8:6:8"
++		${ALLOWRELEASE} -rpath "$(libdir)" -no-undefined  -version-info "8:6:8"
+ 
+ libtclsqlite3.la:	tclsqlite.lo libsqlite3.la
+ 	$(LTLINK) -o $@ tclsqlite.lo \
+ 		$(LIBOBJ) @TCL_STUB_LIB_SPEC@ $(TLIBS) \
+                 -rpath "$(libdir)/sqlite" \
+-		-version-info "8:6:8"
++		-no-undefined -version-info "8:6:8"
+ 
+ sqlite3$(TEXE):	$(TOP)/src/shell.c libsqlite3.la sqlite3.h
+ 	$(LTLINK) $(READLINE_FLAGS) \
+diff -ur sqlite-3.5.9/tclinstaller.tcl sqlite-3.5.9.new/tclinstaller.tcl
+--- sqlite-3.5.9/tclinstaller.tcl	2008-03-14 19:01:53.000000000 +0100
++++ sqlite-3.5.9.new/tclinstaller.tcl	2009-11-24 19:44:54.062500000 +0100
+@@ -13,11 +13,13 @@
+ set LIBNAME [file tail $LIBFILE]
+ set LIB $LIBDIR/sqlite3/$LIBNAME
+ set LIB_INSTALL $LIBDIR_INSTALL/sqlite3/$LIBNAME
++set SQLLITELIB [lindex $auto_path 0]/sqlite3/$LIBNAME
++
+ 
+ file delete -force $LIBDIR/sqlite3
+ file mkdir $LIBDIR/sqlite3
+ set fd [open $LIBDIR/sqlite3/pkgIndex.tcl w]
+-puts $fd "package ifneeded sqlite3 $VERSION \[list load $LIB_INSTALL sqlite3\]"
++puts $fd "package ifneeded sqlite3 $VERSION \[list load $SQLLITELIB sqlite3\]"
+ close $fd
+ 
+ # We cannot use [file copy] because that will just make a copy of

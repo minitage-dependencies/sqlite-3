@@ -1,0 +1,12 @@
+diff -ur sqlite-3.5.9/configure sqlite-3.5.9.readline/configure
+--- sqlite-3.5.9/configure	2008-05-13 02:57:21.000000000 +0200
++++ sqlite-3.5.9.readline/configure	2009-11-24 20:18:48.062500000 +0100
+@@ -11842,7 +11842,7 @@
+ 
+ 			found="no"
+ 			if test "$cross_compiling" != yes; then
+-				for dir in /usr /usr/local /usr/local/readline /usr/contrib /mingw; do
++				for dir in $MINITAGE_READLINE /usr /usr/local /usr/local/readline /usr/contrib /mingw; do
+ 					for subdir in include include/readline; do
+ 						as_ac_File=`echo "ac_cv_file_$dir/$subdir/readline.h" | $as_tr_sh`
+ echo "$as_me:$LINENO: checking for $dir/$subdir/readline.h" >&5
