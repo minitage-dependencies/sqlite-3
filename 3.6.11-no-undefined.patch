@@ -1,0 +1,20 @@
+--- sqlite-3.6.11/Makefile.in	2009-02-15 07:07:08.000000000 -0600
++++ sqlite-3.6.11/Makefile.in	2009-03-15 18:22:32.468750000 -0500
+@@ -462,14 +462,14 @@ last_change:	$(SRC)
+ 
+ libsqlite3.la:	$(LIBOBJ)
+ 	$(LTLINK) -o $@ $(LIBOBJ) $(TLIBS) \
+-		${ALLOWRELEASE} -rpath "$(libdir)" -version-info "8:6:8"
++		${ALLOWRELEASE} -rpath "$(libdir)" -version-info "8:6:8" -no-undefined
+ 
+ libtclsqlite3.la:	tclsqlite.lo libsqlite3.la
+ 	$(LTLINK) -o $@ tclsqlite.lo \
+-		libsqlite3.la @TCL_STUB_LIB_SPEC@ $(TLIBS) \
++		libsqlite3.la @TCL_LIB_SPEC@ $(TLIBS) \
+ 		-rpath "$(TCLLIBDIR)" \
+ 		-version-info "8:6:8" \
+-		-avoid-version
++		-module -avoid-version -no-undefined
+ 
+ sqlite3$(TEXE):	$(TOP)/src/shell.c libsqlite3.la sqlite3.h
+ 	$(LTLINK) $(READLINE_FLAGS) \

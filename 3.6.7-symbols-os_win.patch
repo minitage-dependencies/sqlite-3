@@ -1,0 +1,29 @@
+--- sqlite-3.6.7/src/os_win.c	2008-12-27 23:10:32.425633800 -0600
++++ sqlite-3.6.7/src/os_win.c	2008-12-27 23:06:49.847508800 -0600
+@@ -1545,7 +1545,7 @@
+   UNUSED_PARAMETER(pVfs);
+   getLastErrorMsg(nBuf, zBufOut);
+ }
+-void (*winDlSym(sqlite3_vfs *pVfs, void *pHandle, const char *zSymbol))(void){
++static void (*winDlSym(sqlite3_vfs *pVfs, void *pHandle, const char *zSymbol))(void){
+   UNUSED_PARAMETER(pVfs);
+ #if SQLITE_OS_WINCE
+   /* The GetProcAddressA() routine is only available on wince. */
+@@ -1556,7 +1556,7 @@
+   return (void(*)(void))GetProcAddress((HANDLE)pHandle, zSymbol);
+ #endif
+ }
+-void winDlClose(sqlite3_vfs *pVfs, void *pHandle){
++static void winDlClose(sqlite3_vfs *pVfs, void *pHandle){
+   UNUSED_PARAMETER(pVfs);
+   FreeLibrary((HANDLE)pHandle);
+ }
+@@ -1627,7 +1627,7 @@
+ ** current time and date as a Julian Day number into *prNow and
+ ** return 0.  Return 1 if the time and date cannot be found.
+ */
+-int winCurrentTime(sqlite3_vfs *pVfs, double *prNow){
++static int winCurrentTime(sqlite3_vfs *pVfs, double *prNow){
+   FILETIME ft;
+   /* FILETIME structure is a 64-bit value representing the number of 
+      100-nanosecond intervals since January 1, 1601 (= JD 2305813.5). 
