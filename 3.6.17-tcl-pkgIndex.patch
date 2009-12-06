@@ -1,0 +1,11 @@
+--- sqlite-3.6.17/Makefile.in
++++ sqlite-3.6.17/Makefile.in
+@@ -788,7 +788,7 @@ install:	sqlite3$(BEXE) libsqlite3.la sq
+ 	$(INSTALL) -m 0644 sqlite3.pc $(DESTDIR)$(pkgconfigdir)
+ 
+ pkgIndex.tcl:
+-	echo 'package ifneeded sqlite3 $(RELEASE) [list load $(TCLLIBDIR)/libtclsqlite3.so sqlite3]' > $@
++	echo 'package ifneeded sqlite3 $(RELEASE) [list load $(TCLLIBDIR)/cygtclsqlite3.dll sqlite3]' > $@
+ tcl_install:	lib_install libtclsqlite3.la pkgIndex.tcl
+ 	$(INSTALL) -d $(DESTDIR)$(TCLLIBDIR)
+ 	$(LTINSTALL) libtclsqlite3.la $(DESTDIR)$(TCLLIBDIR)
